@@ -12,7 +12,8 @@ add_compile_definitions(-DLENA_FILE_PATH=\"${CMAKE_CURRENT_LIST_DIR}/LenaRGB.tif
 
 add_library(ffmpeg_library_interface INTERFACE)
 add_library(ort INTERFACE)
-add_executable(yolo_demo detect_img.cpp)
+add_executable(yolo_image_demo detect_img.cpp)
+add_executable(yolo_camera_demo detect_camera.cpp)
 
 target_include_directories(ffmpeg_library_interface INTERFACE ${FFMPEG_INCLUDE_DIRS})
 target_link_directories(ffmpeg_library_interface INTERFACE ${FFMPEG_LIBRARY_DIRS})
@@ -23,7 +24,13 @@ target_include_directories(ort INTERFACE "D:\\APP\\vcpkg-2024.11.16\\packages\\o
 target_link_directories(ort INTERFACE "D:\\APP\\vcpkg-2024.11.16\\packages\\onnxruntime-gpu_x64-windows\\lib")
 target_link_libraries(ort INTERFACE onnxruntime)
 
-target_link_libraries(yolo_demo PRIVATE
+target_link_libraries(yolo_image_demo PRIVATE
+        ffmpeg_library_interface
+        ort
+        ${OpenCV_LIBS}
+)
+
+target_link_libraries(yolo_camera_demo PRIVATE
         ffmpeg_library_interface
         ort
         ${OpenCV_LIBS}
